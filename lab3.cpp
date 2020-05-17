@@ -247,6 +247,8 @@ DWORD WINAPI thread_i(LPVOID lpParam)
                 computation();
                 ReleaseMutex(hMutex);
         }
+	return 0;
+}
 
 int lab3_init()
 {
