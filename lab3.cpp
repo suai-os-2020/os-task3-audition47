@@ -193,17 +193,6 @@ DWORD WINAPI thread_d(LPVOID lpParam)
 }
 
 
-DWORD WINAPI thread_f(LPVOID lpParam)
-{
-        for (int i = 0; i < 3; i++) {
-                WaitForSingleObject(hMutex, INFINITE);
-                cout << "f" << flush;
-                computation();
-                ReleaseMutex(hMutex);
-        }
-        return 0;
-}
-
 DWORD WINAPI thread_h(LPVOID lpParam)
 {
         for (int i = 0; i < 3; i++) {
@@ -212,20 +201,18 @@ DWORD WINAPI thread_h(LPVOID lpParam)
                 computation();
                 ReleaseMutex(hMutex);
         }
-
-    	return 0;
+        return 0;
 }
 
-DWORD WINAPI thread_i(LPVOID lpParam)
+DWORD WINAPI thread_f(LPVOID lpParam)
 {
         for (int i = 0; i < 3; i++) {
                 WaitForSingleObject(hMutex, INFINITE);
-                cout << "i" << flush;
+                cout << "f" << flush;
                 computation();
                 ReleaseMutex(hMutex);
         }
 
-	
         hThread[5] = CreateThread(NULL, 0, thread_g, NULL, 0, &ThreadID);
         if (hThread[5] == NULL) {
                 return GetLastError();
@@ -249,7 +236,18 @@ DWORD WINAPI thread_i(LPVOID lpParam)
         CloseHandle(hThread[6]);
         CloseHandle(hThread[8]);
 
-return 0;
+    	return 0;
+}
+
+DWORD WINAPI thread_i(LPVOID lpParam)
+{
+        for (int i = 0; i < 3; i++) {
+                WaitForSingleObject(hMutex, INFINITE);
+                cout << "i" << flush;
+                computation();
+                ReleaseMutex(hMutex);
+        }
+	return 0;
 }
 
 int lab3_init()
