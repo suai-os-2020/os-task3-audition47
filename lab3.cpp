@@ -225,7 +225,7 @@ DWORD WINAPI thread_i(LPVOID lpParam)
                 ReleaseMutex(hMutex);
         }
 
-	return 0;
+	
         hThread[5] = CreateThread(NULL, 0, thread_g, NULL, 0, &ThreadID);
         if (hThread[5] == NULL) {
                 return GetLastError();
@@ -249,6 +249,7 @@ DWORD WINAPI thread_i(LPVOID lpParam)
         CloseHandle(hThread[6]);
         CloseHandle(hThread[8]);
 
+return 0;
 }
 
 int lab3_init()
