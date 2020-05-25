@@ -147,17 +147,6 @@ DWORD WINAPI thread_e(LPVOID lpParam)
          return 0;
 }
 
-DWORD WINAPI thread_d(LPVOID lpParam)
-{
-        for (int i = 0; i < 3; i++) {
-                WaitForSingleObject(hMutex, INFINITE);
-                cout << "d" << flush;
-                computation();
-                ReleaseMutex(hMutex);
-        }
-        return 0;
-}
-
 DWORD WINAPI thread_g(LPVOID lpParam)
 {
         for (int i = 0; i < 3; i++) {
@@ -166,32 +155,43 @@ DWORD WINAPI thread_g(LPVOID lpParam)
                 computation();
                 ReleaseMutex(hMutex);
         }
-
-    	hThread[5] = CreateThread(NULL, 0, thread_g, NULL, 0, &ThreadID);
-    	if (hThread[5] == NULL) {
-        	return GetLastError();
-    	}
-
-    	hThread[6] = CreateThread(NULL, 0, thread_h, NULL, 0, &ThreadID);
-    	if (hThread[6] == NULL) {
-        	return GetLastError();
-    	}
-
-    	hThread[7] = CreateThread(NULL, 0, thread_f, NULL, 0, &ThreadID);
-    	if (hThread[7] == NULL) {
-        	return GetLastError();
-    	}
-
-    	WaitForSingleObject(hThread[5], INFINITE);
-    	WaitForSingleObject(hThread[6], INFINITE);
-    	WaitForSingleObject(hThread[7], INFINITE);
-
-    	CloseHandle(hThread[5]);
-    	CloseHandle(hThread[6]);
-    	CloseHandle(hThread[7]);
-
-	return 0;
+        return 0;
 }
+
+DWORD WINAPI thread_d(LPVOID lpParam)
+{
+        for (int i = 0; i < 3; i++) {
+                WaitForSingleObject(hMutex, INFINITE);
+                cout << "d" << flush;
+                computation();
+                ReleaseMutex(hMutex);
+        }
+        hThread[5] = CreateThread(NULL, 0, thread_g, NULL, 0, &ThreadID);
+        if (hThread[5] == NULL) {
+                return GetLastError();
+        }
+
+        hThread[6] = CreateThread(NULL, 0, thread_h, NULL, 0, &ThreadID);
+        if (hThread[6] == NULL) {
+                return GetLastError();
+        }
+
+        hThread[7] = CreateThread(NULL, 0, thread_f, NULL, 0, &ThreadID);
+        if (hThread[7] == NULL) {
+                return GetLastError();
+        }
+
+        WaitForSingleObject(hThread[5], INFINITE);
+        WaitForSingleObject(hThread[6], INFINITE);
+        WaitForSingleObject(hThread[7], INFINITE);
+
+        CloseHandle(hThread[5]);
+        CloseHandle(hThread[6]);
+        CloseHandle(hThread[7]);
+
+        return 0;
+}
+
 
 DWORD WINAPI thread_f(LPVOID lpParam)
 {
@@ -213,29 +213,6 @@ DWORD WINAPI thread_h(LPVOID lpParam)
                 ReleaseMutex(hMutex);
         }
 
-    	hThread[5] = CreateThread(NULL, 0, thread_g, NULL, 0, &ThreadID);
-    	if (hThread[5] == NULL) {
-        	return GetLastError();
-    	}
-
-    	hThread[6] = CreateThread(NULL, 0, thread_h, NULL, 0, &ThreadID);
-    	if (hThread[6] == NULL) {
-        	return GetLastError();
-    	}
-
-    	hThread[8] = CreateThread(NULL, 0, thread_i, NULL, 0, &ThreadID);
-    	if (hThread[8] == NULL) {
-        	return GetLastError();
-    	}
-
-    	WaitForSingleObject(hThread[5], INFINITE);
-   	WaitForSingleObject(hThread[6], INFINITE);
-    	WaitForSingleObject(hThread[8], INFINITE);
-
-    	CloseHandle(hThread[5]);
-    	CloseHandle(hThread[6]);
-    	CloseHandle(hThread[8]);
-
     	return 0;
 }
 
@@ -247,7 +224,31 @@ DWORD WINAPI thread_i(LPVOID lpParam)
                 computation();
                 ReleaseMutex(hMutex);
         }
+
 	return 0;
+        hThread[5] = CreateThread(NULL, 0, thread_g, NULL, 0, &ThreadID);
+        if (hThread[5] == NULL) {
+                return GetLastError();
+        }
+
+        hThread[6] = CreateThread(NULL, 0, thread_h, NULL, 0, &ThreadID);
+        if (hThread[6] == NULL) {
+                return GetLastError();
+        }
+
+        hThread[8] = CreateThread(NULL, 0, thread_i, NULL, 0, &ThreadID);
+        if (hThread[8] == NULL) {
+                return GetLastError();
+        }
+
+        WaitForSingleObject(hThread[5], INFINITE);
+        WaitForSingleObject(hThread[6], INFINITE);
+        WaitForSingleObject(hThread[8], INFINITE);
+
+        CloseHandle(hThread[5]);
+        CloseHandle(hThread[6]);
+        CloseHandle(hThread[8]);
+
 }
 
 int lab3_init()
